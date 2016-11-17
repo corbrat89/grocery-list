@@ -1,0 +1,94 @@
+<!doctype html>
+
+<html ng-app="groceryList">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>My Grocery List</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<!-- Adjust size of shopping cart to make it larger and position item count on cart -->
+	<style>
+		.glyphicon-shopping-cart { 
+			font-size: 75px;
+		}
+		.cart {
+			position: relative;
+			left: -130px;
+			top: -36px;
+			color: white;
+			font-size: 25px;
+		}
+	</style>
+	
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+
+	<script src="js/controllers/main.js"></script> <!-- controller -->
+	<script src="js/services/items.js"></script> <!-- service -->
+	<script src="js/core.js"></script> <!-- main application -->
+
+</head>
+<body ng-controller="mainController">
+	<div class="container">
+		<div class="jumbotron text-center">
+			<div class="row">
+				<div class="col-md-8">
+					<h1>Grocery List 2.0</h1>
+				</div>
+				<div class="col-md-4">
+					<i class="glyphicon glyphicon-shopping-cart hidden-xs" aria-hidden="true">
+						<span class="cart">{{ items.length }}</span>
+					</i>
+				</div>
+			</div>
+			<!-- Item count in header -->
+			<h3 class="visible-xs">Items Left : {{ items.length }}</h3>
+		</div>
+		<div  class="row">
+			<div class="col-sm-4">
+				<!-- loop through the items in $scope.items -->
+				<ul class="list-group" >
+					<li class="list-group-item" ng-repeat="item in items">
+						<!-- quantity of items in badge -->
+						<span class="badge">Qty: {{ item.qty }}</span>
+						<!-- delete on red X press -->
+						<span class="glyphicon glyphicon-remove alert-danger" aria-hidden="true" ng-click="deleteItem(item._id)"></span>
+						<!-- item name -->
+						{{ item.text }}
+					</li>
+				</ul>
+				<p class="text-center" ng-show="loading">
+					<span class="fa fa-spinner fa-spin fa-3x"></span>
+				</p>
+			</div>
+			<!-- Form -->
+			<div class="col-sm-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">Add Items</div>
+					<div class="panel-body">
+						<form>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-6">
+										<!-- bind text to formData.text -->
+										<input type="text" class="form-control input-lg" placeholder="What do you need" ng-model="formData.text">
+									</div>
+									
+									<div class="col-sm-6">
+										<!-- bind quantity to formData.qty -->
+										<input type="number" class="form-control input-lg" placeholder="How many" ng-model="formData.qty">
+									</div>
+								</div>
+							</div>
+
+							<!-- createItem is the function that will add new items to the list -->
+							<button type="submit" class="btn btn-primary btn-lg" ng-click="createItem()">Add</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
