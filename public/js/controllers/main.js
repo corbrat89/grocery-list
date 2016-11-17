@@ -11,6 +11,8 @@ angular.module('itemController', [])
 		Items.get()
 			.success(function(data) {
 				$scope.items = data;
+				$scope.sum = getSum("qty", data);
+				$scope.estCost = getSum("cost", data);
 				$scope.loading = false;
 			});
 
@@ -30,7 +32,9 @@ angular.module('itemController', [])
 					.success(function(data) {
 						$scope.loading = false;
 						$scope.formData = {}; // clear the form
-						$scope.items = data; 
+						$scope.items = data;
+						$scope.sum = getSum("qty", data);
+						$scope.estCost = getSum("cost", data);
 					});
 			}
 		};
@@ -46,6 +50,22 @@ angular.module('itemController', [])
 				.success(function(data) {
 					$scope.loading = false;
 					$scope.items = data;
+					$scope.sum = getSum("qty", data);
+					$scope.estCost = getSum("cost", data);
 				});
 		};		
 	}]);
+	
+	
+function getSum(key, obj) {
+    var sum = 0;
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop) && key === prop) {
+            sum += obj[prop];
+        }
+        else if (Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+            sum += getSum(key, obj[prop]);
+        }
+    }
+    return sum;
+}

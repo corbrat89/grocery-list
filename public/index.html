@@ -38,25 +38,29 @@
 				</div>
 				<div class="col-md-4">
 					<i class="glyphicon glyphicon-shopping-cart hidden-xs" aria-hidden="true">
-						<span class="cart">{{ items.length }}</span>
+						<span class="cart">{{ sum }}</span>
 					</i>
 				</div>
 			</div>
 			<!-- Item count in header -->
-			<h3 class="visible-xs">Items Left : {{ items.length }}</h3>
+			<h3 class="visible-xs">Items Left : {{ sum }}</h3>
 		</div>
 		<div  class="row">
 			<div class="col-sm-4">
 				<!-- loop through the items in $scope.items -->
 				<ul class="list-group" >
+					<li class="list-group-item active">Grocery List</li>
 					<li class="list-group-item" ng-repeat="item in items">
 						<!-- quantity of items in badge -->
 						<span class="badge">Qty: {{ item.qty }}</span>
+						<span class="badge">$ {{ item.cost | currency:'' }} </span>
 						<!-- delete on red X press -->
 						<span class="glyphicon glyphicon-remove alert-danger" aria-hidden="true" ng-click="deleteItem(item._id)"></span>
 						<!-- item name -->
 						{{ item.text }}
 					</li>
+					<li class="list-group-item" ng-if="sum < 1">You have everything!</li>
+					<li class="list-group-item" ng-if="sum > 0">Estimated Cost: ${{ estCost | currency:'' }}</li>
 				</ul>
 				<p class="text-center" ng-show="loading">
 					<span class="fa fa-spinner fa-spin fa-3x"></span>
@@ -69,19 +73,20 @@
 					<div class="panel-body">
 						<form>
 							<div class="form-group">
-								<div class="row">
-									<div class="col-sm-6">
-										<!-- bind text to formData.text -->
-										<input type="text" class="form-control input-lg" placeholder="What do you need" ng-model="formData.text">
-									</div>
-									
-									<div class="col-sm-6">
-										<!-- bind quantity to formData.qty -->
-										<input type="number" class="form-control input-lg" placeholder="How many" ng-model="formData.qty">
-									</div>
-								</div>
+								<label>Item</label>
+								<!-- bind text to formData.text -->
+								<input type="text" class="form-control input-lg" placeholder="What do you need" ng-model="formData.text">
 							</div>
-
+							<div class="form-group">
+								<label>Quantity</label>
+								<!-- bind quantity to formData.qty -->
+								<input type="number" class="form-control input-lg" placeholder="How many" ng-model="formData.qty">
+							</div>
+							<div class="form-group">
+								<label>Esitmated Cost</label>
+								<!-- bind quantity to formData.cost -->
+								<input type="number" class="form-control input-lg" placeholder="Estimated Cost" ng-model="formData.cost">
+							</div>
 							<!-- createItem is the function that will add new items to the list -->
 							<button type="submit" class="btn btn-primary btn-lg" ng-click="createItem()">Add</button>
 						</form>

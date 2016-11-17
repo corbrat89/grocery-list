@@ -7,7 +7,6 @@ function getItems(res) {
         if (err) {
             res.send(err);
         }
-		
         res.json(items); // else return all items in JSON
     });
 };
@@ -26,6 +25,7 @@ module.exports = function (app) {
         Item.create({
             text: req.body.text,
 			qty: req.body.qty,
+			cost: req.body.cost,
             done: false
         }, function (err, item) {
             if (err)
