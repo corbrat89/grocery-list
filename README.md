@@ -1,6 +1,6 @@
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/corbrat89/groceryList.git`
+1. Clone the repository: `git clone https://github.com/corbrat89/grocery-list.git`
 2. Install the application: `npm install`
 3. For current data using a mlab.com for the mongo db replace database.localUrl with database.remoteUrl in the mongoose.connect line of server.js
 3. Start the server: `node server.js`
